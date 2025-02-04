@@ -11,28 +11,35 @@
     <script src="assets/js/script.js" defer></script>
 </head>
 <body>
-    <div class="recipe-container">
-        <h5>New Recipe</h5>
-        <div class="input-recipe">
-            <p>NAME</p>
-            <input type="text" name="" id="">
-        </div>
-        <div class="input-recipe">
-            <p>CATEGORY</p>
-            <input type="text" name="" id="">
-        </div>
-        <div class="input-recipe">
-            <p>DESCRIPTION</p>
-            <input type="text" name="" id="">
-        </div>
-        <div class="input-recipe">
-            <p>INGREDIENTS</p>
-            <input type="text" name="" id="">
-        </div>
-        <div class="input-recipe">
-            <p>DESCRIPTION</p>
-            <input type="text" name="" id="">
-        </div>
+    <form id="newTaskForm" >
+        <div class="recipe-container">
+            <h5>New Recipe</h5>
+            <div class="input-recipe">
+                <p>NAME</p>
+                <input type="text" name="name" id="">
+            </div>
+            <div class="input-recipe">
+                <p>CATEGORY</p>
+                <input type="text" name="category" id="">
+            </div>
+            <div class="input-recipe">
+                <p>CALORIES PER SERVING</p>
+                <input type="text" name="caloriesperserving" id="">
+            </div>
+            <div class="input-recipe">
+                <p>COOK TIME MINUTES</p>
+                <input type="text" name="cooktime" id="">
+            </div>
+            <div class="input-recipe">
+                <p>INGREDIENTS</p>
+                <input type="text" name="ingredients" id="">
+            </div>
+            <div class="input-recipe">
+                <p>INSTRUCTIONS</p>
+                <input type="text" name="instructions" id="">
+            </div>
+            <button type="submit">Save Recipe</button>
+    </form>
         <div class="navbar">
             <a href="main-page.html"><i class="fa-solid fa-house"></i></a>
             <a href="categories.html"><i class="fa-solid fa-bookmark"></i></a>

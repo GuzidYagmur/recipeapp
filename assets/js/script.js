@@ -12,10 +12,13 @@ async function fetchRecipes() {
         }
         foodMenus.innerHTML = "";
         const data = await res.json();
-        recipes = [...data.recipes];
+        const apiRecipes = data.recipes;
 
-        renderRecipes(recipes); 
-        return recipes;
+        const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+        const allRecipes = [...apiRecipes, ...storedRecipes];
+
+        renderRecipes(allRecipes); 
+        return allRecipes;
     } catch (error) {
         foodMenus.innerHTML = "Bir Hata Oluştu :/";
         console.error(error);
@@ -165,6 +168,7 @@ function renderRecipes(recipes) {
 
 
 if (window.location.pathname.includes("favorites.html")) {
+    updateFavoriteIcons();
     const favoritesList = document.getElementById("favorites-list");
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -198,3 +202,35 @@ if (window.location.pathname.includes("favorites.html")) {
         });
     });
 }
+
+
+//***************************** */
+
+
+newTaskForm.addEventListener("submit", function(e){
+    e.preventDefault();
+    const formObj = Object.fromEntries(new FormData(e.target));
+    let newId = 1;
+
+    const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+    if (storedRecipes.length > 0) {
+        newId = storedRecipes[storedRecipes.length - 1].id + 1;
+    }
+
+    const newTask = {
+        id: newId,
+        name: formObj.name,
+        caloriesPerServing: formObj.caloriesperserving,
+        cookTimeMinutes: formObj.cooktime,
+        
+    };
+
+    storedRecipes.push(newTask);
+    localStorage.recipes = JSON.stringify(storedRecipes);
+
+    e.target.reset();
+    fetchRecipes();
+    renderRecipes();
+})
+
+console.log(recipes);
