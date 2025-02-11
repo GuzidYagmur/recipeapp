@@ -8,12 +8,13 @@ body {
     font-family: system-ui;
 
 }
+
 .container {
     height: 793px;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    position: relative; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .entry {
@@ -32,6 +33,7 @@ body {
     font-weight: 400;
     line-height: 48.41px;
 }
+
 .img-bg {
     z-index: 1;
     position: absolute;
@@ -45,21 +47,23 @@ body {
 .img-btn {
     z-index: 2;
     position: absolute;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
     0% {
-        transform: translate(-50%, -50%) scale(1); 
+        transform: translate(-50%, -50%) scale(1);
     }
+
     50% {
-        transform: translate(-50%, -50%) scale(1.1); 
+        transform: translate(-50%, -50%) scale(1.1);
     }
+
     100% {
-        transform: translate(-50%, -50%) scale(1); 
+        transform: translate(-50%, -50%) scale(1);
     }
 }
 
@@ -114,7 +118,7 @@ body {
     margin-bottom: 11px;
 }
 
-.foodMenu{
+.foodMenu {
     margin-bottom: 80px;
 }
 
@@ -144,7 +148,7 @@ body {
 }
 
 
-.img-head img{
+.img-head img {
     width: 100px;
     border-radius: 25px;
 }
@@ -237,7 +241,8 @@ body {
     height: 30px;
     border-radius: 50%;
 }
-#loading{
+
+#loading {
     margin-top: 100px;
 }
 
@@ -374,13 +379,19 @@ body {
     width: 100px;
 }
 
+.input-recipe {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 
 
 
 
 
-.favcontent{
+.favcontent {
     margin-bottom: 10px;
     background-color: #F6F6F6;
     border-radius: 20px;
@@ -392,52 +403,48 @@ body {
 }
 
 
-.favimg-head{
+.favimg-head {
     display: flex;
     cursor: pointer;
     gap: 10px;
     margin-top: 4px;
 }
 
-.favimg-head img{
+.favimg-head img {
     width: 100px;
     border-radius: 25px;
 }
 
-.fav-container{
+.fav-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
 }
 
 
-.favimg-head h3{
+.favimg-head h3 {
     margin-left: 15px;
     margin-top: 35px;
 }
 
-.favcontent p{
+.favcontent p {
     margin-block: 10px;
     margin-inline: 5px;
 }
 
 
-.favorite-btn{
-   background: none;
-   border: none;
-   padding: 0;
-   cursor: pointer;
-   outline: none;
-   margin-left: 15px;
-}
-.favorite-btn i{
+.favorite-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
     font-size: 24px;
     color: red;
 }
 
-
-.content-cat{
+.content-cat {
     margin-bottom: 10px;
     background-color: #F6F6F6;
     border-radius: 20px;
@@ -448,30 +455,92 @@ body {
     width: 425px;
 }
 
-.category-container{
+.category-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.cat-head{
+.cat-head {
     display: flex;
     cursor: pointer;
     gap: 10px;
     margin-top: 4px;
 }
 
-.cat-head img{
+.cat-head img {
     width: 100px;
     border-radius: 25px;
 }
 
-.cat-head h3{
+.cat-head h3 {
     margin-left: 15px;
     margin-top: 35px;
 }
 
-.content-cat p{
+.content-cat p {
     margin-block: 10px;
     margin-inline: 5px;
+}
+
+#recipe-list {
+    margin-bottom: 70px;
+}
+
+#favorites-list {
+    margin-bottom: 70px;
+}
+
+.sbmt-btn {
+    background-color: #33b5e5;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.sbmt-btn:hover {
+    background-color: #a6d3d6;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+.sbmt-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+.sbmt-bt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 87px;
+}
+
+.delete-btn{
+    border: none;
+    background-color: #f6f6f6;
+    margin-left: 15px;
+}
+
+#empty-img{
+    width: 300px;
+}
+
+.cat-tit{
+    display: flex;
+    justify-content: center;
+}
+.cat-tit h2{
+    margin-top: 27px;
+    margin-bottom: 16px;
+    color: #000000;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 26.63px;
+    text-align: center;
+    margin-bottom: 32px;
 }

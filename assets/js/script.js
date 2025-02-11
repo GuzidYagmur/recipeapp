@@ -17,7 +17,7 @@ async function fetchRecipes() {
         const storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
         const allRecipes = [...apiRecipes, ...storedRecipes];
 
-        renderRecipes(allRecipes); 
+        renderRecipes(allRecipes);
         return allRecipes;
     } catch (error) {
         foodMenus.innerHTML = "Bir Hata Oluştu :/";
@@ -36,6 +36,9 @@ function productTemplate({ id, name, image, caloriesPerServing, cookTimeMinutes 
                 <img src="${image}" alt="">
                 <div class="food-head">
                     <h4>${name}</h4>
+                    <button class="delete-btn" data-id="${id}">
+                       <i class="fa-solid fa-trash"></i>
+                    </button>
                    <button class="favorite-btn" data-id="${id}">
                         <i class="fa-regular fa-heart"></i>
                     </button>
@@ -53,7 +56,23 @@ function productTemplate({ id, name, image, caloriesPerServing, cookTimeMinutes 
             </div>
         </div>
     `;
+
+
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("searchInput");
+    const foodMenus = document.querySelector(".foodMenu");
+    searchInput.addEventListener("keyup", () => {
+        let searchText = searchInput.value.toLowerCase();
+        let foodItems = document.querySelectorAll(".menu-content");
+
+        foodItems.forEach(item => {
+            let foodName = item.querySelector("h4").textContent.toLowerCase();
+            item.style.display = foodName.includes(searchText) ? "block" : "none";
+        });
+    });
+});
 
 
 const foods = document.querySelectorAll(".foods");
@@ -109,6 +128,8 @@ if (window.location.pathname.includes("recipeofcategory.html")) {
 }
 
 
+
+
 function toggleFavorite(recipe) {
     let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -131,38 +152,85 @@ function updateFavoriteIcons() {
 
     favoriteBtns.forEach(btn => {
         const recipeId = btn.getAttribute("data-id");
-        const isFavorite = favorites.some(fav => fav.id === recipeId);
+        const isFavorite = favorites.some(fav => fav.id == recipeId);
 
         if (isFavorite) {
-            btn.innerHTML = `<i class="fa-solid fa-heart"></i>`; 
+            btn.innerHTML = `<i class="fa-solid fa-heart"></i>`;
         } else {
-            btn.innerHTML = `<i class="fa-regular fa-heart"></i>`; 
+            btn.innerHTML = `<i class="fa-regular fa-heart"></i>`;
+        }
+    });
+}
+
+function deleteRecipe(event) {
+    const button = event.currentTarget;
+    const recipeId = button.getAttribute("data-id"); 
+
+    Swal.fire({
+        title: "Tarifi silmek istediğinize emin misiniz?",
+        text: "Bu işlemi geri almanız mümkün değil!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "İptal",
+        confirmButtonText: "Evet, sil!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let storedRecipes = JSON.parse(localStorage.getItem("recipes")) || [];
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            
+            storedRecipes = storedRecipes.filter(recipe => recipe.id != recipeId);
+            localStorage.setItem("recipes", JSON.stringify(storedRecipes));  
+
+            favorites = favorites.filter(recipe => recipe.id != recipeId);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            
+            button.closest(".menu-content").remove();
+
+            Swal.fire({
+                title: "Silindi!",
+                text: "Tarif başarıyla silindi.",
+                icon: "success",
+            });
         }
     });
 }
 
 
+function bindDeleteButtons() {
+    document.querySelectorAll(".delete-btn").forEach(button => {
+        button.removeEventListener("click", deleteRecipe); 
+        button.addEventListener("click", deleteRecipe);    
+    });
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    bindDeleteButtons();
+});
+
+
 function renderRecipes(recipes) {
     const foodMenus = document.querySelector(".foodMenu");
 
-    foodMenus.innerHTML = ""; 
+    foodMenus.innerHTML = "";
 
     recipes.forEach(recipe => {
         const template = productTemplate(recipe);
         foodMenus.innerHTML += template;
     });
 
-    
+    bindDeleteButtons();
     const favoriteBtns = document.querySelectorAll(".favorite-btn");
     favoriteBtns.forEach(btn => {
         btn.addEventListener("click", (e) => {
             const recipeId = e.currentTarget.getAttribute("data-id");
             const recipe = recipes.find(r => r.id == recipeId);
-            toggleFavorite(recipe); 
+            toggleFavorite(recipe);
         });
     });
 
-    
     updateFavoriteIcons();
 }
 
@@ -191,23 +259,25 @@ if (window.location.pathname.includes("favorites.html")) {
         `;
     });
 
-    
+
     const favoriteBtns = document.querySelectorAll(".favorite-btn");
     favoriteBtns.forEach(btn => {
         btn.addEventListener("click", (e) => {
             const recipeId = e.currentTarget.getAttribute("data-id");
             const recipe = favorites.find(r => r.id == recipeId);
-            toggleFavorite(recipe); 
-            window.location.reload(); 
+            toggleFavorite(recipe);
+            window.location.reload();
         });
     });
 }
 
 
+
+
 //***************************** */
 
 
-newTaskForm.addEventListener("submit", function(e){
+newTaskForm.addEventListener("submit", function (e) {
     e.preventDefault();
     const formObj = Object.fromEntries(new FormData(e.target));
     let newId = 1;
@@ -222,7 +292,6 @@ newTaskForm.addEventListener("submit", function(e){
         name: formObj.name,
         caloriesPerServing: formObj.caloriesperserving,
         cookTimeMinutes: formObj.cooktime,
-        
     };
 
     storedRecipes.push(newTask);
@@ -232,5 +301,3 @@ newTaskForm.addEventListener("submit", function(e){
     fetchRecipes();
     renderRecipes();
 })
-
-console.log(recipes);
